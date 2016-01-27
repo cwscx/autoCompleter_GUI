@@ -15,8 +15,8 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
     QWidget *central = centralWidget();
     QWidget *layoutContainer = central->findChild<QWidget *>("layoutContainer");
-    layoutContainer->move(QPoint((central->width() - layoutContainer->geometry().width()) / 2,
-                                 (central->height() - layoutContainer->geometry().height()) / 2));
+    layoutContainer->move(QPoint((central->width() - layoutContainer->width()) / 2,
+                                 (central->height() - layoutContainer->height()) / 2));
 }
 
 MainWindow::~MainWindow()
