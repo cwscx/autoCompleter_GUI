@@ -17,6 +17,8 @@ SOURCES += main.cpp\
     wordlist.cpp
 
 HEADERS  += mainwindow.h \
-    wordlist.h
+    wordlist.h \
+    dictionaryConst.h
 
 FORMS    += mainwindow.ui
+CONFIG += c++11

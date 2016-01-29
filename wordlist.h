@@ -15,6 +15,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <array>
+#include "dictionaryConst.h"
 
 
 class WordList : public QListWidget
@@ -24,12 +26,14 @@ class WordList : public QListWidget
 public:
     WordList(QWidget *parent = 0);
     ~WordList();
+    const static char * dictionary[];
 
 private slots:
     void setItems(const QString &newString);
 
 private:
     QLineEdit *lineEdit;
+    std::vector<std::string> autocomplete(unsigned int num_words, std::string prefix);
 };
 
 #endif // WORDLIST_H

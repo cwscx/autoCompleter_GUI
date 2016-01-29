@@ -10,7 +10,6 @@ WordList::WordList(QWidget *parent) : QListWidget(parent)
     lineEdit = parent->parentWidget()->findChild<QLineEdit *>("lineEdit");
     qDebug() << lineEdit << endl;
     connect(lineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(setItems(const QString &)));
-
 }
 
 WordList::~WordList()
@@ -18,22 +17,13 @@ WordList::~WordList()
 }
 
 
-std::vector<std::string> autocomplete(unsigned int num_words, std::string prefix) {
+std::vector<std::string> WordList::autocomplete(unsigned int num_words, std::string prefix) {
 
-   static std::vector<std::string> dictionary;
-   // Fill dictionary from file on first iteration
-   if(dictionary.size() == 0) {
-       std::string nextLine;
-       std::ifstream dictionaryFile ("words.txt");
-       while(getline(dictionaryFile, nextLine)) {
-           dictionary.push_back(nextLine);
-       }
-   }
 
    std::vector<std::string> temp;
-   for(std::vector<std::string>::iterator it = dictionary.begin() ; it != dictionary.end() ; ++it) {
-       if(it->find(prefix) == 0) {
-           temp.push_back(*it);
+   for(int i = 0 ; i < 235886 ; i++) {
+       if(std::string(dictionary[i]).find(prefix) == 0) {
+           temp.push_back(std::string(dictionary[i]));
            if(temp.size() >= num_words) {
                break;
            }
@@ -63,3 +53,6 @@ void WordList::setItems(const QString &newString)
     else
         resize(width(), 0);
 }
+
+
+const char * WordList::dictionary[] = DICTIONARY;
