@@ -24,7 +24,7 @@ std::vector<std::string> autocomplete(unsigned int num_words, std::string prefix
    // Fill dictionary from file on first iteration
    if(dictionary.size() == 0) {
        std::string nextLine;
-       std::ifstream dictionaryFile ("/home/gkrulce/AutoCompletor/AutoCreator/words.txt");
+       std::ifstream dictionaryFile ("words.txt");
        while(getline(dictionaryFile, nextLine)) {
            dictionary.push_back(nextLine);
        }
