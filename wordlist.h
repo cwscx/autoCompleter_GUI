@@ -12,6 +12,10 @@
 #include <QListWidget>
 #include <QString>
 #include <QLineEdit>
+#include <string>
+#include <iostream>
+#include <fstream>
+
 
 class WordList : public QListWidget
 {
