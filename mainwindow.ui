@@ -75,7 +75,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="0" column="0" alignment="Qt::AlignBottom">
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="MyLineEdit" name="lineEdit"/>
         </item>
         <item row="1" column="0">
          <widget class="QWidget" name="listContainer" native="true">
@@ -88,6 +88,9 @@ p, li { white-space: pre-wrap; }
              <height>192</height>
             </rect>
            </property>
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
           </widget>
          </widget>
         </item>
@@ -96,8 +99,6 @@ p, li { white-space: pre-wrap; }
      </layout>
     </widget>
    </widget>
-   <zorder>layoutContainer</zorder>
-   <zorder></zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -125,6 +126,11 @@ p, li { white-space: pre-wrap; }
    <class>WordList</class>
    <extends>QListWidget</extends>
    <header>wordlist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

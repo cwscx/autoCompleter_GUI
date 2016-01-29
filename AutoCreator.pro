@@ -14,11 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    wordlist.cpp
+    wordlist.cpp \
+    mylineedit.cpp
 
 HEADERS  += mainwindow.h \
     wordlist.h \
-    dictionaryConst.h
+    dictionaryConst.h \
+    mylineedit.h
 
 FORMS    += mainwindow.ui
 CONFIG += c++11
