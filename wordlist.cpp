@@ -4,6 +4,7 @@
  */
 #include "wordlist.h"
 #include <QDebug>
+#include <unistd.h>
 
 WordList::WordList(QWidget *parent) : QListWidget(parent)
 {
@@ -77,7 +78,8 @@ void WordList::setItems(const QString &newString)
     clear();
     if (!newString.isEmpty())
     {
-        std::vector<std::string> v = autocomplete(5, newString.toUtf8().constData());
+        std::vector<std::string> v = autocomplete(10, newString.toUtf8().constData());
+        sleep(1);
         qDebug() << "Size of v: " << v.size() << endl;
         for(std::vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()));
