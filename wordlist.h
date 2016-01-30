@@ -17,7 +17,9 @@
 #include <fstream>
 #include <array>
 #include "dictionaryConst.h"
+#include "mylineedit.h"
 
+class MyLineEdit;
 
 class WordList : public QListWidget
 {
@@ -25,6 +27,8 @@ class WordList : public QListWidget
 
 public:
     WordList(QWidget *parent = 0);
+    void selectNext();
+    void selectPrev();
     ~WordList();
     const static char * dictionary[];
 
@@ -32,7 +36,7 @@ private slots:
     void setItems(const QString &newString);
 
 private:
-    QLineEdit *lineEdit;
+    MyLineEdit *lineEdit;
     std::vector<std::string> autocomplete(unsigned int num_words, std::string prefix);
 };
 

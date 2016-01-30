@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     WordList *list = centralWidget()->findChild<WordList *>("listWidget");
     list->setVisible(false);
-    cout << list << endl;
+    cerr << list << endl;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {

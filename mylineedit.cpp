@@ -3,13 +3,23 @@
 
 MyLineEdit::MyLineEdit(QWidget *parent) : QLineEdit(parent)
 {
-    wordList = parent->findChild<WordList *>("listWidget");
-    qDebug() << wordList << endl;
-    // maybe connect enter pressed to button pressed/ or autocomplete in wordlist?
-    //connect(lineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(setItems(const QString &)));
+    wordList = parent->parentWidget()->findChild<WordList *>("listWidget");
+    qDebug() << "wordList pointer: " << wordList << endl;
+    connect(this, SIGNAL(textEdited(const QString &)),
+            this, SLOT(storeOriginal(const QString &)));
+}
+
+void MyLineEdit::setWordList(WordList * listPtr) {
+    wordList =listPtr;
+    qDebug() << "wordList pointer: " << wordList << endl;
 }
 
 MyLineEdit::~MyLineEdit() {}
+
+void MyLineEdit::storeOriginal(const QString &newString) {
+    originalString = newString;
+    qDebug() << originalString;
+}
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
 {
@@ -17,11 +27,12 @@ void MyLineEdit::keyPressEvent(QKeyEvent *event)
     {
             // move down highlighter of wordList
             qDebug() << this << "key down pressed!";
+            wordList->selectNext();
     }
     else if (event->key() == Qt::Key_Up)
     {
-            // move up highlighter of wordList;
             qDebug() << this << "key up pressed!";
+            wordList->selectPrev();
     }
     else{
             // default handler for event

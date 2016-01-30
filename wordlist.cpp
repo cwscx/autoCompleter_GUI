@@ -4,12 +4,16 @@
  */
 #include "wordlist.h"
 #include <QDebug>
+#include <iostream>
+
+using namespace std;
 
 WordList::WordList(QWidget *parent) : QListWidget(parent)
 {
-    lineEdit = parent->parentWidget()->findChild<QLineEdit *>("lineEdit");
+    lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
+    lineEdit->setWordList(this);
     qDebug() << lineEdit << endl;
-    connect(lineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(setItems(const QString &)));
+    connect(lineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(setItems(const QString &)));
 }
 
 WordList::~WordList()
@@ -32,6 +36,44 @@ std::vector<std::string> WordList::autocomplete(unsigned int num_words, std::str
     return temp;
 }
 
+
+void WordList::selectNext() {
+    int currRow = currentRow();
+    qDebug() << "CurrentRow(): " << currentRow();
+    qDebug() << "CurrentCount: " << count();
+    if (currRow == count() - 1) {
+        currRow = -1;
+    } else {
+        currRow++;
+    }
+
+    setCurrentRow(currRow);
+    if (currentRow() != -1) {
+        lineEdit->setText(currentItem()->text());
+    } else {
+        lineEdit->setText(lineEdit->originalString);
+    }
+}
+
+void WordList::selectPrev(){
+    int currRow = currentRow();
+    qDebug() << "CurrentRow(): " << currentRow();
+    qDebug() << "CurrentCount: " << count();
+    if (currRow == -1) {
+        currRow = count() - 1;
+    } else {
+        currRow--;
+    }
+
+    setCurrentRow(currRow);
+    if (currentRow() != -1) {
+        lineEdit->setText(currentItem()->text());
+    } else {
+        lineEdit->setText(lineEdit->originalString);
+    }
+}
+
+
 void WordList::setItems(const QString &newString)
 {
     qDebug() << "This is my custom setItems() method! " << newString << endl;
@@ -39,7 +81,7 @@ void WordList::setItems(const QString &newString)
     if (!newString.isEmpty())
     {
         std::vector<std::string> v = autocomplete(5, newString.toUtf8().constData());
-
+        cerr << "Size of v: " << v.size() << endl;
         for(std::vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()));
         }
@@ -48,7 +90,7 @@ void WordList::setItems(const QString &newString)
     if (count() > 0)
     {
         setVisible(true);
-        resize(width(), rectForIndex(indexFromItem(item(0))).height()*count());
+        resize(width(), rectForIndex(indexFromItem(item(0))).height()*count() + 5);
     }
     else
         resize(width(), 0);
