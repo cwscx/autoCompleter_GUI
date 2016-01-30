@@ -15,11 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
+    /*
     QWidget *central = centralWidget();
     QWidget *layoutContainer = central->findChild<QWidget *>("layoutContainer");
     layoutContainer->move(QPoint((central->width() - layoutContainer->width()) / 2,
                                  (central->height() - layoutContainer->height()) / 2));
- }
+    */
+}
 
 MainWindow::~MainWindow()
 {
