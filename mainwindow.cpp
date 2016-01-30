@@ -1,9 +1,7 @@
 #include "mainwindow.h"
 #include "wordlist.h"
 #include "ui_mainwindow.h"
-#include <iostream>
-
-using namespace std;
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     WordList *list = centralWidget()->findChild<WordList *>("listWidget");
     list->setVisible(false);
-    cerr << list << endl;
+    qDebug() << list << endl;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
