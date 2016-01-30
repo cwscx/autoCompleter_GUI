@@ -32,7 +32,7 @@ public:
     ~WordList();
     const static char * dictionary[];
 
-private slots:
+public slots:
     void setItems(const QString &newString);
 
 private:

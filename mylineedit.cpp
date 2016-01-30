@@ -23,18 +23,20 @@ void MyLineEdit::storeOriginal(const QString &newString) {
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
 {
-    if(event->key() == Qt::Key_Down)
-    {
-            // move down highlighter of wordList
+    switch(event->key()) {
+        case Qt::Key_Down: // move down highlighter of wordList
             qDebug() << this << "key down pressed!";
             wordList->selectNext();
-    }
-    else if (event->key() == Qt::Key_Up)
-    {
+            break;
+        case Qt::Key_Up:   // move up highlighter of wordList
             qDebug() << this << "key up pressed!";
             wordList->selectPrev();
-    }
-    else{
+            break;
+        case Qt::Key_Return:
+            storeOriginal(text());
+            wordList->setItems(text());
+            break;
+        default:
             // default handler for event
             QLineEdit::keyPressEvent(event);
     }
