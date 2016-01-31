@@ -34,10 +34,13 @@ public:
 
 public slots:
     void setItems(const QString &newString);
+    void clearItems();
+    void mouseClickClearItems(QListWidgetItem * item);
 
 private:
     MyLineEdit *lineEdit;
-    std::vector<std::string> autocomplete(unsigned int num_words, std::string prefix);
+    std::vector<std::string> predictCompletions(std::string prefix,
+                                                unsigned int num_words);
 };
 
 #endif // WORDLIST_H

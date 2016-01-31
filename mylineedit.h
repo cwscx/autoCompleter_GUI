@@ -15,9 +15,7 @@ public:
     MyLineEdit(QWidget *parent = 0);
     void setWordList(WordList *);
     ~MyLineEdit();
-
-private slots:
-    void storeOriginal(const QString &newString);
+    void storeOriginal();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

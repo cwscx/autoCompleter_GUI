@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     WordList *list = centralWidget()->findChild<WordList *>("listWidget");
+    QPushButton *pushButton = centralWidget()->findChild<QPushButton *>("pushButton");
+    connect(pushButton, SIGNAL(clicked(bool)),
+            list, SLOT(clearItems()));
     list->setVisible(false);
     qDebug() << list << endl;
 }
@@ -19,7 +22,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QWidget *layoutContainer = central->findChild<QWidget *>("layoutContainer");
     layoutContainer->move(QPoint((central->width() - layoutContainer->width()) / 2,
                                  (central->height() - layoutContainer->height()) / 2));
- }
+}
 
 MainWindow::~MainWindow()
 {

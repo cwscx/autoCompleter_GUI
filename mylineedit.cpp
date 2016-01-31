@@ -16,9 +16,9 @@ void MyLineEdit::setWordList(WordList * listPtr) {
 
 MyLineEdit::~MyLineEdit() {}
 
-void MyLineEdit::storeOriginal(const QString &newString) {
-    originalString = newString;
-    qDebug() << originalString;
+void MyLineEdit::storeOriginal() {
+    originalString = text();
+    qDebug() << "Original Stored: " << originalString;
 }
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
@@ -33,8 +33,7 @@ void MyLineEdit::keyPressEvent(QKeyEvent *event)
             wordList->selectPrev();
             break;
         case Qt::Key_Return:
-            storeOriginal(text());
-            wordList->setItems(text());
+            wordList->clearItems();
             break;
         default:
             // default handler for event

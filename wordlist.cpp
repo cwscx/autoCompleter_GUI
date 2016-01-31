@@ -11,16 +11,20 @@ WordList::WordList(QWidget *parent) : QListWidget(parent)
     lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
     lineEdit->setWordList(this);
     qDebug() << lineEdit << endl;
-    connect(lineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(setItems(const QString &)));
+    connect(lineEdit, SIGNAL(textEdited(const QString &)),
+            this, SLOT(setItems(const QString &)));
+    connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(mouseClickClearItems(QListWidgetItem *)));
 }
 
 WordList::~WordList()
 {
 }
 
-
-std::vector<std::string> WordList::autocomplete(unsigned int num_words, std::string prefix) {
-
+std::vector<std::string> WordList::predictCompletions(std::string prefix,
+                                            unsigned int num_words) {
+//std::vector<std::string> WordList::autocomplete(unsigned int num_words,
+//                                              std::string prefix) {
 
    std::vector<std::string> temp;
    for(int i = 0 ; i < 235886 ; i++) {
@@ -77,9 +81,9 @@ void WordList::setItems(const QString &newString)
     qDebug() << "This is my custom setItems() method! " << newString << endl;
     clear();
     if (!newString.isEmpty())
-    {
-        std::vector<std::string> v = autocomplete(10, newString.toUtf8().constData());
-        sleep(1);
+    {   //TODO: Call the function from student code.
+        std::vector<std::string> v = predictCompletions(newString.toUtf8().constData(), 10);
+        //sleep(1); // Simulate the delay from student autocomplete
         qDebug() << "Size of v: " << v.size() << endl;
         for(std::vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()));
@@ -93,6 +97,21 @@ void WordList::setItems(const QString &newString)
     }
     else
         resize(width(), 0);
+}
+
+void WordList::clearItems() {
+    qDebug() << "Clearing candidate box." << endl;
+    lineEdit->storeOriginal();
+    clear();
+    resize(width(), 0);
+}
+
+void WordList::mouseClickClearItems(QListWidgetItem * item) {
+    qDebug() << "Clearing candidate box." << endl;
+    lineEdit->setText(item->text());
+    lineEdit->storeOriginal();
+    clear();
+    resize(width(), 0);
 }
 
 
