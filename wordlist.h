@@ -18,6 +18,7 @@
 #include <array>
 #include "dictionaryConst.h"
 #include "mylineedit.h"
+#include "MWFTrie.hpp"
 
 class MyLineEdit;
 
@@ -39,6 +40,7 @@ public slots:
 
 private:
     MyLineEdit *lineEdit;
+    MWFTrie * trie;
     std::vector<std::string> predictCompletions(std::string prefix,
                                                 unsigned int num_words);
 };

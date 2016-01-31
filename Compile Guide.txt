@@ -1,0 +1,21 @@
+GitHub for the project:
+	https://github.com/cwscx/autoCompleter_GUI
+
+To TAs: When testing with code from PA3Deploy branch, move 
+skeleton / solution code into the current folder. For a 
+function showcase version, check CleanSlate branch.
+
+
+
+Compiling the binary is as simple as running
+    > qmake AutoCreator.pro
+    > make
+
+For windows, assuming you are working a Qt with MinGW, run 
+    > mingw32-make
+instead of make.
+
+Notice that in skeleton PA3 code, one shall add a line to 
+return an empty vector in MWF::predictCompletions(). Other-
+wise the GUI would crash upon typing first character because
+the GUI received a undefined object from prefictCompletions(). 
