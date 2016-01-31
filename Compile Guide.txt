@@ -1,13 +1,12 @@
 GitHub for the project:
 	https://github.com/cwscx/autoCompleter_GUI
 To TA: 
-    There are three branches on repo now:
-    Master, CleanSlate, and PA3Deploy
-    Master and CleanSlate is probably the same and they have
-    showcase code to demonstrate that basic functionalities are 
-    working.
-    PA3Deploy has a modified AutoCreator.pro to compile with PA3
+    There are two branches on repo now:
+    Master and CleanSlate
+    Master has a deployable AutoCreator.pro to compile with PA3
     code. Please move PA3 skeleton/solution code in when testing.
+    CleanSlate has showcase code to demonstrate that basic 
+    functionalities are working.
 
 
 Compiling the binary is as simple as running
