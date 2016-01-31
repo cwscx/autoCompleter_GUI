@@ -17,6 +17,9 @@ public:
     ~MyLineEdit();
     void storeOriginal();
 
+private slots:
+    void storeOriginal(const QString &);
+
 protected:
     void keyPressEvent(QKeyEvent *event);
 

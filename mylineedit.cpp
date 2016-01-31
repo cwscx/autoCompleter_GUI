@@ -21,6 +21,11 @@ void MyLineEdit::storeOriginal() {
     qDebug() << "Original Stored: " << originalString;
 }
 
+void MyLineEdit::storeOriginal(const QString & str) {
+    originalString = str;
+    qDebug() << "Original Stored: " << originalString;
+}
+
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key()) {
