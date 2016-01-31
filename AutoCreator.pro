@@ -15,18 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     wordlist.cpp \
-    mylineedit.cpp \
-    autocomplete_util.cpp \
-    MNode.cpp \
-    MWFTrie.cpp
+    mylineedit.cpp
 
 HEADERS  += mainwindow.h \
     wordlist.h \
     dictionaryConst.h \
-    mylineedit.h \
-    autocomplete_util.hpp \
-    MNode.hpp \
-    MWFTrie.hpp
+    mylineedit.h
 
 FORMS    += mainwindow.ui
 CONFIG += c++11

@@ -83,7 +83,7 @@ void WordList::setItems(const QString &newString)
     clear();
     if (!newString.isEmpty())
     {   //TODO: Call the function from student code.
-        std::vector<std::string> v = trie->predictCompletions(newString.toUtf8().constData(), 10);
+        std::vector<std::string> v = predictCompletions(newString.toUtf8().constData(), 10);
         //sleep(1); // Simulate the delay from student autocomplete
         qDebug() << "Size of v: " << v.size() << endl;
         for(std::vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
