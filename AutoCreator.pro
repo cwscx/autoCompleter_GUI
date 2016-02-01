@@ -18,7 +18,9 @@ SOURCES += main.cpp\
     mylineedit.cpp \
     autocomplete_util.cpp \
     MNode.cpp \
-    MWFTrie.cpp
+    MWFTrie.cpp \
+    autocomplete_util.cpp \
+    MNode.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -26,7 +28,8 @@ HEADERS  += mainwindow.h \
     mylineedit.h \
     autocomplete_util.hpp \
     MNode.hpp \
-    MWFTrie.hpp
+    MWFTrie.hpp \
+    constants.hpp
 
 FORMS    += mainwindow.ui
 CONFIG += c++11
