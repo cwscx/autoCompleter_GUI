@@ -33,7 +33,8 @@ public:
   vector<string> predictCompletions(string prefix, unsigned int num_completions);
 
   ~MWFTrie();
-  const static char * dictionary[];
+  std::vector<string> dictionary;
+  long long dictSize;
 };
 
 #endif // MWFTRIE_HPP
