@@ -3,13 +3,11 @@
  * Date: 01/28/2015
  */
 #include "wordlist.h"
-#include <QDebug>
 #include <unistd.h>
 
 WordList::WordList(QWidget *parent) : QListWidget(parent) {
     lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
     lineEdit->setWordList(this);
-    qDebug() << lineEdit << endl;
     connect(lineEdit, SIGNAL(textEdited(const QString &)),
             this, SLOT(setItems(const QString &)));
     connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
@@ -22,8 +20,6 @@ WordList::~WordList() {
 
 void WordList::selectNext() {
     int currRow = currentRow();
-    qDebug() << "CurrentRow(): " << currentRow();
-    qDebug() << "CurrentCount: " << count();
     if (currRow == count() - 1) {
         currRow = -1;
     } else {
@@ -40,8 +36,6 @@ void WordList::selectNext() {
 
 void WordList::selectPrev() {
     int currRow = currentRow();
-    qDebug() << "CurrentRow(): " << currentRow();
-    qDebug() << "CurrentCount: " << count();
     if (currRow == -1) {
         currRow = count() - 1;
     } else {
@@ -58,7 +52,6 @@ void WordList::selectPrev() {
 
 
 void WordList::setItems(const QString &newString) {
-    qDebug() << "This is my custom setItems() method! " << newString << endl;
     clear();
     if (!newString.isEmpty()) {
       std::string searchString = newString.toUtf8().constData();
@@ -66,7 +59,6 @@ void WordList::setItems(const QString &newString) {
       for (int i = 0; i < MAX_POSTFIX_TO_SEARCH; i++) { 
         std::vector<std::string> v = trie->predictCompletions(searchString, 
                                                               MAX_DISPLAY);
-        qDebug() << "Size of v: " << v.size() << endl;
         for(std::vector<std::string>::iterator it = v.begin(); 
             it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()).prepend(
@@ -82,24 +74,22 @@ void WordList::setItems(const QString &newString) {
         searchString = searchString.substr(spacePos + 1);
       }
     }
-    qDebug() << "size of each item" << rectForIndex(indexFromItem(item(0))).height();
     if (count() > 0) {
         setVisible(true);
-        resize(width(), rectForIndex(indexFromItem(item(0))).height()*count() + 5);
+        resize(width(), 
+               rectForIndex(indexFromItem(item(0))).height()*count() + 5);
     } else {
         resize(width(), 0);
     }
 }
 
 void WordList::clearItems() {
-    qDebug() << "Clearing candidate box." << endl;
     lineEdit->storeOriginal();
     clear();
     resize(width(), 0);
 }
 
 void WordList::mouseClickClearItems(QListWidgetItem * item) {
-    qDebug() << "Clearing candidate box." << endl;
     lineEdit->setText(item->text());
     lineEdit->storeOriginal();
     clear();

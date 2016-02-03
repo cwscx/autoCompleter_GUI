@@ -13,9 +13,6 @@
 #include <QString>
 #include <QLineEdit>
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <array>
 #include "mylineedit.h"
 #include "MWFTrie.hpp"
 
@@ -32,7 +29,6 @@ public:
     void selectNext();
     void selectPrev();
     ~WordList();
-    const static char * dictionary[];
 
 public slots:
     void setItems(const QString &newString);
@@ -42,8 +38,6 @@ public slots:
 private:
     MyLineEdit *lineEdit;
     MWFTrie * trie;
-    std::vector<std::string> predictCompletions(std::string prefix,
-                                                unsigned int num_words);
 };
 
 #endif // WORDLIST_H
