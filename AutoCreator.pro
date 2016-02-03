@@ -16,16 +16,14 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     wordlist.cpp \
     mylineedit.cpp \
-    autocomplete_util.cpp \
-    MNode.cpp \
-    MWFTrie.cpp
+    DictionaryTrie.cpp \
+    util.cpp
 
 HEADERS  += mainwindow.h \
     wordlist.h \
     mylineedit.h \
-    autocomplete_util.hpp \
-    MNode.hpp \
-    MWFTrie.hpp
+    DictionaryTrie.cpp \
+    util.cpp
 
 FORMS    += mainwindow.ui
 CONFIG += c++11

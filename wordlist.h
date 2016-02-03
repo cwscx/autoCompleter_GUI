@@ -14,7 +14,7 @@
 #include <QLineEdit>
 #include <string>
 #include "mylineedit.h"
-#include "MWFTrie.hpp"
+#include "DictionaryTrie.hpp"
 
 #define MAX_DISPLAY 10
 #define MAX_POSTFIX_TO_SEARCH 5
@@ -37,7 +37,7 @@ public slots:
 
 private:
     MyLineEdit *lineEdit;
-    MWFTrie * trie;
+    DictionaryTrie * trie;
 };
 
 #endif // WORDLIST_H

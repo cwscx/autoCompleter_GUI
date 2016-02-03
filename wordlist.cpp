@@ -12,10 +12,11 @@ WordList::WordList(QWidget *parent) : QListWidget(parent) {
             this, SLOT(setItems(const QString &)));
     connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(mouseClickClearItems(QListWidgetItem *)));
-    trie = new MWFTrie();
+    trie = new DictionaryTrie();
 }
 
 WordList::~WordList() {
+   delete trie;
 }
 
 void WordList::selectNext() {
