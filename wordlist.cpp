@@ -6,8 +6,7 @@
 #include <QDebug>
 #include <unistd.h>
 
-WordList::WordList(QWidget *parent) : QListWidget(parent)
-{
+WordList::WordList(QWidget *parent) : QListWidget(parent) {
     lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
     lineEdit->setWordList(this);
     qDebug() << lineEdit << endl;
@@ -15,10 +14,10 @@ WordList::WordList(QWidget *parent) : QListWidget(parent)
             this, SLOT(setItems(const QString &)));
     connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(mouseClickClearItems(QListWidgetItem *)));
+    trie = new MWFTrie();
 }
 
-WordList::~WordList()
-{
+WordList::~WordList() {
 }
 
 void WordList::selectNext() {
@@ -39,7 +38,7 @@ void WordList::selectNext() {
     }
 }
 
-void WordList::selectPrev(){
+void WordList::selectPrev() {
     int currRow = currentRow();
     qDebug() << "CurrentRow(): " << currentRow();
     qDebug() << "CurrentCount: " << count();
@@ -58,26 +57,38 @@ void WordList::selectPrev(){
 }
 
 
-void WordList::setItems(const QString &newString)
-{
+void WordList::setItems(const QString &newString) {
     qDebug() << "This is my custom setItems() method! " << newString << endl;
     clear();
-    if (!newString.isEmpty())
-    {   //TODO: Call the function from student code.
-        std::vector<std::string> v = trie->predictCompletions(newString.toUtf8().constData(), 10);
+    if (!newString.isEmpty()) {
+      std::string searchString = newString.toUtf8().constData();
+      std::string prefixString = std::string();
+      for (int i = 0; i < MAX_POSTFIX_TO_SEARCH; i++) { 
+        std::vector<std::string> v = trie->predictCompletions(searchString, 
+                                                              MAX_DISPLAY);
         qDebug() << "Size of v: " << v.size() << endl;
-        for(std::vector<std::string>::iterator it = v.begin(); it != v.end(); ++it) {
-            addItem(QString::fromUtf8(it->c_str()));
+        for(std::vector<std::string>::iterator it = v.begin(); 
+            it != v.end(); ++it) {
+            addItem(QString::fromUtf8(it->c_str()).prepend(
+                      QString::fromUtf8(prefixString.c_str())));
         }
+
+        if (count() >= MAX_DISPLAY) break;
+        int spacePos = searchString.find_first_of(' ');
+        if (spacePos == string::npos 
+           || spacePos + 1 >= searchString.length()) break;
+
+        prefixString += searchString.substr(0, spacePos + 1);
+        searchString = searchString.substr(spacePos + 1);
+      }
     }
     qDebug() << "size of each item" << rectForIndex(indexFromItem(item(0))).height();
-    if (count() > 0)
-    {
+    if (count() > 0) {
         setVisible(true);
         resize(width(), rectForIndex(indexFromItem(item(0))).height()*count() + 5);
-    }
-    else
+    } else {
         resize(width(), 0);
+    }
 }
 
 void WordList::clearItems() {
