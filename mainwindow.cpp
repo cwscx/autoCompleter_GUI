@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "wordlist.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(pushButton, SIGNAL(clicked(bool)),
             list, SLOT(clearItems()));
     list->setVisible(false);
-    qDebug() << list << endl;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {

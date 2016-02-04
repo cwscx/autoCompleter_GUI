@@ -4,6 +4,7 @@
  */
 #include "wordlist.h"
 #include <unistd.h>
+#include <QDebug>
 
 WordList::WordList(QWidget *parent) : QListWidget(parent) {
     lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
@@ -19,6 +20,8 @@ WordList::~WordList() {
    delete trie;
 }
 
+// Select the next item in drop down menu. The selected text will be sent to
+// input bar, but the original input can be retrieved later.
 void WordList::selectNext() {
     int currRow = currentRow();
     if (currRow == count() - 1) {
@@ -35,6 +38,8 @@ void WordList::selectNext() {
     }
 }
 
+// Select the prev item in drop down menu. The selected text will be sent to
+// input bar, but the original input can be retrieved later.
 void WordList::selectPrev() {
     int currRow = currentRow();
     if (currRow == -1) {
@@ -51,30 +56,54 @@ void WordList::selectPrev() {
     }
 }
 
-
+// Populate the drop down menu by searching prediction of word in input bar
 void WordList::setItems(const QString &newString) {
     clear();
     if (!newString.isEmpty()) {
-      std::string searchString = newString.toUtf8().constData();
-      std::string prefixString = std::string();
-      for (int i = 0; i < MAX_POSTFIX_TO_SEARCH; i++) { 
-        std::vector<std::string> v = trie->predictCompletions(searchString, 
-                                                              MAX_DISPLAY);
-        for(std::vector<std::string>::iterator it = v.begin(); 
+      vector<string> prefixString;
+      vector<string> searchString;
+      std::string originString = newString.toUtf8().constData();
+      std::string trailingSpaces = std::string();
+      // Get the trailing spaces
+      while (originString.find_last_of(' ') == originString.length() - 1) {
+         originString.pop_back();
+         trailingSpaces += " ";
+      }
+
+      int spacePos = originString.length();
+      // Construct postfixes
+      for (int i = 0; i < MAX_POSTFIX_TO_SEARCH; i++) {
+         spacePos = originString.find_last_of(' ', spacePos - 1);
+
+         prefixString.push_back(originString.substr(0, spacePos + 1));
+         searchString.push_back( 
+            originString.substr(spacePos + 1) + trailingSpaces);
+         
+         if (spacePos == string::npos) break;
+      }
+
+/*    
+      for (int i = searchString.size() - 1; i >= 0; i--) {
+         qDebug() << "Prefix " << i << ": " << QString::fromUtf8(prefixString[i].c_str());
+         qDebug() << "Search " << i << ": " << QString::fromUtf8(searchString[i].c_str());
+         qDebug() << "Trail :" << trailingSpaces.length() << endl;
+      }
+*/
+      // Search each postfix
+      for (int i = searchString.size() - 1; i >= 0; i--) { 
+         std::vector<std::string> v = 
+            trie->predictCompletions(searchString[i], MAX_DISPLAY);
+         for(std::vector<std::string>::iterator it = v.begin(); 
             it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()).prepend(
-                      QString::fromUtf8(prefixString.c_str())));
-        }
+                      QString::fromUtf8(prefixString[i].c_str())));
+         }
 
-        if (count() >= MAX_DISPLAY) break;
-        int spacePos = searchString.find_first_of(' ');
-        if (spacePos == string::npos 
-           || spacePos + 1 >= searchString.length()) break;
-
-        prefixString += searchString.substr(0, spacePos + 1);
-        searchString = searchString.substr(spacePos + 1);
+         if (count() >= MAX_DISPLAY) break;    
       }
     }
+
+    // Resize drop down menu
     if (count() > 0) {
         setVisible(true);
         resize(width(), 
@@ -84,12 +113,16 @@ void WordList::setItems(const QString &newString) {
     }
 }
 
+
+// Clear the drop down menu BUT RETAIN the content in input bar
 void WordList::clearItems() {
     lineEdit->storeOriginal();
     clear();
     resize(width(), 0);
 }
 
+// Clear the drop down menu, replace the content in input bar with
+// the clicked item
 void WordList::mouseClickClearItems(QListWidgetItem * item) {
     lineEdit->setText(item->text());
     lineEdit->storeOriginal();
