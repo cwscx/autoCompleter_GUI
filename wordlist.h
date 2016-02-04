@@ -1,10 +1,10 @@
 /*
- * Author: Huayin Zhou
+ * Author: Galen Krulce, Shengyang Shi, Huajie Wu, Huayin Zhou
  * Description: WordList is a customized QListWidget to keep track of the text
  * changes in QLineEdit and print strings to the changes accordingly by
  * calling pa3 function:
  * vector<std::string> autocomplete(unsigned int num_words, std::string prefix).
- * Date: 01/28/2015
+ * Date: 01/28/2016
  */
 #ifndef WORDLIST_H
 #define WORDLIST_H
