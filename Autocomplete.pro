@@ -16,14 +16,14 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     wordlist.cpp \
     mylineedit.cpp \
-    DictionaryTrie.cpp \
-    util.cpp
+    ../DictionaryTrie.cpp \
+    ../util.cpp
 
 HEADERS  += mainwindow.h \
     wordlist.h \
     mylineedit.h \
-    DictionaryTrie.cpp \
-    util.cpp
+    ../DictionaryTrie.cpp \
+    ../util.cpp
 
 FORMS    += mainwindow.ui
 CONFIG += c++11

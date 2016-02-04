@@ -18,7 +18,7 @@ WordList::WordList(QWidget *parent) : QListWidget(parent) {
    trie = new DictionaryTrie();
    // Read the dictionary into DictTrie 
    std::ifstream in;
-   in.open("freq_dict.txt");
+   in.open("../freq_dict.txt");
    Timer T;
    T.load_dict(*trie, in);
    in.close();
