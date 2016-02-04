@@ -8,9 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     WordList *list = centralWidget()->findChild<WordList *>("listWidget");
-    QPushButton *pushButton = centralWidget()->findChild<QPushButton *>("pushButton");
+    MyLineEdit *lineEdit = centralWidget()->
+                           findChild<MyLineEdit *>("lineEdit");
+    QPushButton *pushButton = centralWidget()->
+                              findChild<QPushButton *>("pushButton");
     connect(pushButton, SIGNAL(clicked(bool)),
-            list, SLOT(clearItems()));
+            lineEdit, SLOT(clearTextBox()));
     list->setVisible(false);
 }
 

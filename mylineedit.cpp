@@ -20,6 +20,11 @@ void MyLineEdit::storeOriginal(const QString & str) {
     originalString = str;
 }
 
+void MyLineEdit::clearTextBox() {
+   setText("");
+   wordList->clearItems();
+}
+
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key()) {

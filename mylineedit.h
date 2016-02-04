@@ -19,6 +19,7 @@ public:
 
 private slots:
     void storeOriginal(const QString &);
+    void clearTextBox();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
