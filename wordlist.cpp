@@ -108,7 +108,7 @@ void WordList::setItems(const QString &newString) {
             trie->predictCompletions(searchString[i], MAX_DISPLAY);
          for(vector<string>::iterator it = v.begin();
             it != v.end(); ++it) {
-       if(find(final.begin(),final.end(), prefixString[i]+(*it))
+       if(std::find(final.begin(),final.end(), prefixString[i]+(*it))
 	      == final.end())
 	     final.push_back(prefixString[i]+(*it));
 	    if (final.size() >= MAX_DISPLAY) break;  
