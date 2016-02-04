@@ -105,6 +105,7 @@ void WordList::setItems(const QString &newString) {
             it != v.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()).prepend(
                       QString::fromUtf8(prefixString[i].c_str())));
+            if (count() >= MAX_DISPLAY) break;  
          }
 
          if (count() >= MAX_DISPLAY) break;    
