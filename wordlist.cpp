@@ -5,15 +5,23 @@
 #include "wordlist.h"
 #include <unistd.h>
 #include <QDebug>
+#include <fstream>
 
 WordList::WordList(QWidget *parent) : QListWidget(parent) {
-    lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
-    lineEdit->setWordList(this);
-    connect(lineEdit, SIGNAL(textEdited(const QString &)),
-            this, SLOT(setItems(const QString &)));
-    connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
-            this, SLOT(mouseClickClearItems(QListWidgetItem *)));
-    trie = new DictionaryTrie();
+   lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
+   lineEdit->setWordList(this);
+   connect(lineEdit, SIGNAL(textEdited(const QString &)),
+           this, SLOT(setItems(const QString &)));
+   connect(this, SIGNAL(itemClicked(QListWidgetItem*)),
+           this, SLOT(mouseClickClearItems(QListWidgetItem *)));
+
+   trie = new DictionaryTrie();
+   // Read the dictionary into DictTrie 
+   std::ifstream in;
+   in.open("freq_dict.txt");
+   Timer T;
+   T.load_dict(*trie, in);
+   in.close();
 }
 
 WordList::~WordList() {
