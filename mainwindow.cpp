@@ -1,8 +1,3 @@
-/*
- * Author: Galen Krulce, Shengyang Shi, Huajie Wu, Huayin Zhou
- * Description: Represents the top level QT window for the application.
- * Date: 01/28/2016
- */
 #include "mainwindow.h"
 #include "wordlist.h"
 #include "ui_mainwindow.h"

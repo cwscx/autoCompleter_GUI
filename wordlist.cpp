@@ -1,15 +1,15 @@
 /*
- * Author: Galen Krulce, Shengyang Shi, Huajie Wu, Huayin Zhou
- * Description: WordList is a customized QListWidget to keep track of the text
- * changes in QLineEdit and print strings to the changes accordingly by
- * calling pa3 function:
- * vector<std::string> autocomplete(unsigned int num_words, std::string prefix).
- * Date: 01/28/2016
+ * Author: Huayin Zhou
+ * Date: 01/28/2015
  */
 #include "wordlist.h"
 #include <unistd.h>
 #include <QDebug>
 #include <fstream>
+#include <algorithm>
+
+using std::vector;
+using std::string;
 
 WordList::WordList(QWidget *parent) : QListWidget(parent) {
    lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
@@ -23,8 +23,8 @@ WordList::WordList(QWidget *parent) : QListWidget(parent) {
    // Read the dictionary into DictTrie 
    std::ifstream in;
    in.open("../freq_dict.txt");
-   Timer T;
-   T.load_dict(*trie, in);
+   Utils U;
+   U.load_dict(*trie, in);
    in.close();
 }
 
@@ -32,10 +32,8 @@ WordList::~WordList() {
    delete trie;
 }
 
-/*
- * Select the next item in drop down menu. The selected text will be sent to
- * input bar, but the original input can be retrieved later.
- */
+// Select the next item in drop down menu. The selected text will be sent to
+// input bar, but the original input can be retrieved later.
 void WordList::selectNext() {
     int currRow = currentRow();
     if (currRow == count() - 1) {
@@ -52,10 +50,8 @@ void WordList::selectNext() {
     }
 }
 
-/*
- * Select the prev item in drop down menu. The selected text will be sent to
- * input bar, but the original input can be retrieved later.
- */
+// Select the prev item in drop down menu. The selected text will be sent to
+// input bar, but the original input can be retrieved later.
 void WordList::selectPrev() {
     int currRow = currentRow();
     if (currRow == -1) {
@@ -72,16 +68,14 @@ void WordList::selectPrev() {
     }
 }
 
-/*
- * Populate the drop down menu by searching prediction of word in input bar
- */
+// Populate the drop down menu by searching prediction of word in input bar
 void WordList::setItems(const QString &newString) {
     clear();
     if (!newString.isEmpty()) {
       vector<string> prefixString;
       vector<string> searchString;
-      std::string originString = newString.toUtf8().constData();
-      std::string trailingSpaces = std::string();
+      string originString = newString.toUtf8().constData();
+      string trailingSpaces = string();
       // Get the trailing spaces
       while (originString.find_last_of(' ') == originString.length() - 1) {
          originString.pop_back();
@@ -108,18 +102,24 @@ void WordList::setItems(const QString &newString) {
       }
 */
       // Search each postfix
+      vector<string> final;
       for (int i = searchString.size() - 1; i >= 0; i--) { 
-         std::vector<std::string> v = 
+         vector<string> v =
             trie->predictCompletions(searchString[i], MAX_DISPLAY);
-         for(std::vector<std::string>::iterator it = v.begin(); 
+         for(vector<string>::iterator it = v.begin();
             it != v.end(); ++it) {
-            addItem(QString::fromUtf8(it->c_str()).prepend(
-                      QString::fromUtf8(prefixString[i].c_str())));
-            if (count() >= MAX_DISPLAY) break;  
+       if(find(final.begin(),final.end(), prefixString[i]+(*it))
+	      == final.end())
+	     final.push_back(prefixString[i]+(*it));
+	    if (final.size() >= MAX_DISPLAY) break;  
          }
 
-         if (count() >= MAX_DISPLAY) break;    
+         if (final.size() >= MAX_DISPLAY) break;    
       }
+   for(vector<string>::iterator it = final.begin();
+        it != final.end(); ++it) {
+     addItem(QString::fromUtf8(it->c_str()));
+     }
     }
 
     // Resize drop down menu
@@ -133,19 +133,15 @@ void WordList::setItems(const QString &newString) {
 }
 
 
-/*
- * Clear the drop down menu BUT RETAIN the content in input bar
- */
+// Clear the drop down menu BUT RETAIN the content in input bar
 void WordList::clearItems() {
     lineEdit->storeOriginal();
     clear();
     resize(width(), 0);
 }
 
-/*
- * Clear the drop down menu, replace the content in input bar with
- * the clicked item
- */
+// Clear the drop down menu, replace the content in input bar with
+// the clicked item
 void WordList::mouseClickClearItems(QListWidgetItem * item) {
     lineEdit->setText(item->text());
     lineEdit->storeOriginal();

@@ -1,10 +1,3 @@
-/*
- * Author: Galen Krulce, Shengyang Shi, Huajie Wu, Huayin Zhou
- * Description: This file is a custom LineEdit widget. This customization
- * allows us to respond to various user events as well as programmatically
- * control the string it displays.
- * Date: 01/28/2016
- */
 #ifndef MYLINEEDIT_H
 #define MYLINEEDIT_H
 
