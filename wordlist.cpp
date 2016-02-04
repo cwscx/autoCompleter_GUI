@@ -32,8 +32,10 @@ WordList::~WordList() {
    delete trie;
 }
 
-// Select the next item in drop down menu. The selected text will be sent to
-// input bar, but the original input can be retrieved later.
+/*
+ * Select the next item in drop down menu. The selected text will be sent to
+ * input bar, but the original input can be retrieved later.
+ */
 void WordList::selectNext() {
     int currRow = currentRow();
     if (currRow == count() - 1) {
@@ -50,8 +52,10 @@ void WordList::selectNext() {
     }
 }
 
-// Select the prev item in drop down menu. The selected text will be sent to
-// input bar, but the original input can be retrieved later.
+/*
+ * Select the prev item in drop down menu. The selected text will be sent to
+ * input bar, but the original input can be retrieved later.
+ */
 void WordList::selectPrev() {
     int currRow = currentRow();
     if (currRow == -1) {
@@ -68,7 +72,9 @@ void WordList::selectPrev() {
     }
 }
 
-// Populate the drop down menu by searching prediction of word in input bar
+/*
+ * Populate the drop down menu by searching prediction of word in input bar
+ */
 void WordList::setItems(const QString &newString) {
     clear();
     if (!newString.isEmpty()) {
@@ -127,15 +133,19 @@ void WordList::setItems(const QString &newString) {
 }
 
 
-// Clear the drop down menu BUT RETAIN the content in input bar
+/*
+ * Clear the drop down menu BUT RETAIN the content in input bar
+ */
 void WordList::clearItems() {
     lineEdit->storeOriginal();
     clear();
     resize(width(), 0);
 }
 
-// Clear the drop down menu, replace the content in input bar with
-// the clicked item
+/*
+ * Clear the drop down menu, replace the content in input bar with
+ * the clicked item
+ */
 void WordList::mouseClickClearItems(QListWidgetItem * item) {
     lineEdit->setText(item->text());
     lineEdit->storeOriginal();
