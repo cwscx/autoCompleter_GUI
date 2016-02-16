@@ -77,7 +77,8 @@ void WordList::setItems(const QString &newString) {
       string originString = newString.toUtf8().constData();
       string trailingSpaces = string();
       // Get the trailing spaces
-      while (originString.find_last_of(' ') == originString.length() - 1) {
+      while (originString.length() > 0
+             &&  originString.find_last_of(' ') == originString.length() - 1) {
          originString.pop_back();
          trailingSpaces += " ";
       }
