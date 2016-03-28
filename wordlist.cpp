@@ -70,6 +70,7 @@ void WordList::selectPrev() {
 // Populate the drop down menu by searching prediction of word in input bar
 void WordList::setItems(const QString &newString) {
     clear();
+    mainWindow->clearStatusBarText();
     if (!newString.isEmpty()) {
         vector<string> prefixString;
         vector<string> searchString;
@@ -102,6 +103,7 @@ void WordList::setItems(const QString &newString) {
       }
 */
         // Search each postfix
+        mainWindow->setStatusBarText(tr("Searching..."));
         vector<string> final;
         for (int i = searchString.size() - 1; i >= 0; i--) {
             vector<string> v =
@@ -120,6 +122,7 @@ void WordList::setItems(const QString &newString) {
             it != final.end(); ++it) {
             addItem(QString::fromUtf8(it->c_str()));
         }
+        mainWindow->setStatusBarText(tr("Finish Searching"), 2000);
     }
 
     // Resize drop down menu

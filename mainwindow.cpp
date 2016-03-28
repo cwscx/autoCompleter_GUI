@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     dropDown = centralWidget()->findChild<WordList *>("listWidget");
     textField = centralWidget()->findChild<MyLineEdit *>("lineEdit");
-    qDebug() << dropDown;
-    qDebug() << textField;
+    statusBar()->clearMessage();
     QPushButton * pushButton =
                 centralWidget()->findChild<QPushButton *>("pushButton");
 
@@ -50,6 +49,14 @@ void MainWindow::textFieldSaveCurrTextAsOriginal() {
 
 QString MainWindow::getTextFieldOriginalString() {
     return textField->originalString;
+}
+
+void MainWindow::clearStatusBarText() {
+    statusBar()->clearMessage();
+}
+
+void MainWindow::setStatusBarText(const QString& str, int timeout) {
+    statusBar()->showMessage(str, timeout);
 }
 
 MainWindow::~MainWindow() {
