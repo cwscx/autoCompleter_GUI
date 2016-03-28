@@ -3,16 +3,20 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+    ui(new Ui::MainWindow) {
+
     ui->setupUi(this);
     dropDown = centralWidget()->findChild<WordList *>("listWidget");
-    textField = centralWidget()->
-                           findChild<MyLineEdit *>("lineEdit");
-    QPushButton * pushButton = centralWidget()->
-                              findChild<QPushButton *>("pushButton");
+    textField = centralWidget()->findChild<MyLineEdit *>("lineEdit");
+    qDebug() << dropDown;
+    qDebug() << textField;
+    QPushButton * pushButton =
+                centralWidget()->findChild<QPushButton *>("pushButton");
+
     connect(pushButton, SIGNAL(clicked(bool)),
             textField, SLOT(clearTextBox()));
+    connect(textField, SIGNAL(textEdited(const QString &)),
+            dropDown, SLOT(setItems(const QString &)));
     dropDown->setVisible(false);
 }
 
@@ -36,15 +40,18 @@ void MainWindow::dropDownClear() {
     dropDown->clearItems();
 }
 
-//void MainWindow::setWordList(WordList * listPtr) {
-//    wordList = listPtr;
-//}
+void MainWindow::textFieldSetText(const QString& str) {
+    textField->setText(str);
+}
 
-//void MainWindow::setLineEdit(MyLineEdit * linePtr) {
-//    lineEdit = linePtr;
-//}
+void MainWindow::textFieldSaveCurrTextAsOriginal() {
+    textField->storeOriginal();
+}
 
-MainWindow::~MainWindow()
-{
+QString MainWindow::getTextFieldOriginalString() {
+    return textField->originalString;
+}
+
+MainWindow::~MainWindow() {
     delete ui;
 }

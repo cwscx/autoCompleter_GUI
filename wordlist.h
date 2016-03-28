@@ -13,14 +13,14 @@
 #include <QString>
 #include <QLineEdit>
 #include <string>
-#include "mylineedit.h"
+#include "mainwindow.h"
 #include "../DictionaryTrie.hpp"
 #include "../util.hpp"
 
 #define MAX_DISPLAY 10
 #define MAX_POSTFIX_TO_SEARCH 5
 
-class MyLineEdit;
+class MainWindow;
 class WordList : public QListWidget
 {
     Q_OBJECT
@@ -37,7 +37,7 @@ public slots:
     void mouseClickClearItems(QListWidgetItem * item);
 
 private:
-    MyLineEdit *lineEdit;
+    MainWindow *mainWindow;
     DictionaryTrie * trie;
 };
 

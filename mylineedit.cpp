@@ -20,8 +20,8 @@ void MyLineEdit::storeOriginal(const QString & str) {
 }
 
 void MyLineEdit::clearTextBox() {
-   setText("");
-   mainWindow->dropDownClear();
+    setText("");
+    mainWindow->dropDownClear();
 }
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event)

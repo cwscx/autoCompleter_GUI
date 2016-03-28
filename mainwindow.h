@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
 #include "wordlist.h"
 #include "mylineedit.h"
 
@@ -9,8 +10,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class MyLineEdit;
-class WordList;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -24,6 +23,10 @@ public:
     void dropDownSelPrev();
     void dropDownClear();
 
+    void textFieldSetText(const QString& str);
+    void textFieldSaveCurrTextAsOriginal();
+
+    QString getTextFieldOriginalString();
 private:
     Ui::MainWindow *ui;
     MyLineEdit * textField;
