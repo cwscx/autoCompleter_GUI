@@ -1,13 +1,12 @@
 #include "mylineedit.h"
+#include <QDebug>
 
 MyLineEdit::MyLineEdit(QWidget *parent) : QLineEdit(parent) {
-    wordList = parent->parentWidget()->findChild<WordList *>("listWidget");
+    //wordList = parent->parentWidget()->findChild<WordList *>("listWidget");
+    mainWindow = (MainWindow *)(parent->parentWidget()->parentWidget()->parentWidget());
+    //mainWindow.setLineEdit(this);
     connect(this, SIGNAL(textEdited(const QString &)),
             this, SLOT(storeOriginal(const QString &)));
-}
-
-void MyLineEdit::setWordList(WordList * listPtr) {
-    wordList = listPtr;
 }
 
 MyLineEdit::~MyLineEdit() {}
@@ -22,20 +21,20 @@ void MyLineEdit::storeOriginal(const QString & str) {
 
 void MyLineEdit::clearTextBox() {
    setText("");
-   wordList->clearItems();
+   mainWindow->dropDownClear();
 }
 
 void MyLineEdit::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key()) {
         case Qt::Key_Down: // move down highlighter of wordList
-            wordList->selectNext();
+            mainWindow->dropDownSelNext();
             break;
         case Qt::Key_Up:   // move up highlighter of wordList
-            wordList->selectPrev();
+            mainWindow->dropDownSelPrev();
             break;
         case Qt::Key_Return:
-            wordList->clearItems();
+            mainWindow->dropDownClear();
             break;
         default:
             // default handler for event

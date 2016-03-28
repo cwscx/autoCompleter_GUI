@@ -2,11 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "wordlist.h"
+#include "mylineedit.h"
 
 namespace Ui {
 class MainWindow;
 }
 
+class MyLineEdit;
+class WordList;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -16,8 +20,15 @@ public:
     ~MainWindow();
     void resizeEvent(QResizeEvent *event);
 
+    void dropDownSelNext();
+    void dropDownSelPrev();
+    void dropDownClear();
+
 private:
     Ui::MainWindow *ui;
+    MyLineEdit * textField;
+    WordList * dropDown;
+
 };
 
 #endif // MAINWINDOW_H

@@ -19,8 +19,8 @@
 
 #define MAX_DISPLAY 10
 #define MAX_POSTFIX_TO_SEARCH 5
-class MyLineEdit;
 
+class MyLineEdit;
 class WordList : public QListWidget
 {
     Q_OBJECT

@@ -13,7 +13,7 @@ using std::string;
 
 WordList::WordList(QWidget *parent) : QListWidget(parent) {
    lineEdit = parent->parentWidget()->findChild<MyLineEdit *>("lineEdit");
-   lineEdit->setWordList(this);
+
    connect(lineEdit, SIGNAL(textEdited(const QString &)),
            this, SLOT(setItems(const QString &)));
    connect(this, SIGNAL(itemClicked(QListWidgetItem*)),

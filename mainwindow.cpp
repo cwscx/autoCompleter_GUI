@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "wordlist.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -7,14 +6,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    WordList *list = centralWidget()->findChild<WordList *>("listWidget");
-    MyLineEdit *lineEdit = centralWidget()->
+    dropDown = centralWidget()->findChild<WordList *>("listWidget");
+    textField = centralWidget()->
                            findChild<MyLineEdit *>("lineEdit");
-    QPushButton *pushButton = centralWidget()->
+    QPushButton * pushButton = centralWidget()->
                               findChild<QPushButton *>("pushButton");
     connect(pushButton, SIGNAL(clicked(bool)),
-            lineEdit, SLOT(clearTextBox()));
-    list->setVisible(false);
+            textField, SLOT(clearTextBox()));
+    dropDown->setVisible(false);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -24,6 +23,26 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     layoutContainer->move(QPoint((central->width() - layoutContainer->width()) / 2,
                                  (central->height() - layoutContainer->height()) / 2));
 }
+
+void MainWindow::dropDownSelNext() {
+    dropDown->selectNext();
+}
+
+void MainWindow::dropDownSelPrev() {
+    dropDown->selectPrev();
+}
+
+void MainWindow::dropDownClear() {
+    dropDown->clearItems();
+}
+
+//void MainWindow::setWordList(WordList * listPtr) {
+//    wordList = listPtr;
+//}
+
+//void MainWindow::setLineEdit(MyLineEdit * linePtr) {
+//    lineEdit = linePtr;
+//}
 
 MainWindow::~MainWindow()
 {
