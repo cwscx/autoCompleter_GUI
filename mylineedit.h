@@ -4,8 +4,9 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QKeyEvent>
-#include "wordlist.h"
-class WordList;
+#include "mainwindow.h"
+
+class MainWindow;
 class MyLineEdit : public QLineEdit
 {
     Q_OBJECT
@@ -13,7 +14,6 @@ class MyLineEdit : public QLineEdit
 public:
     QString originalString;
     MyLineEdit(QWidget *parent = 0);
-    void setWordList(WordList *);
     ~MyLineEdit();
     void storeOriginal();
 
@@ -26,7 +26,7 @@ protected:
 
 
 private:
-    WordList *wordList;
+    MainWindow *mainWindow;
 };
 
 #endif // MYLINEEDIT_H
