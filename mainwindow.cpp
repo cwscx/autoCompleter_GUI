@@ -99,7 +99,7 @@ void MainWindow::setStatusBarText(const QString& str, int timeout) {
     statusBar()->showMessage(str, timeout);
 }
 
-std::string getDictionaryPath() {
+std::string MainWindow::getDictionaryPath() {
     return dictionaryPath;
 }
 
