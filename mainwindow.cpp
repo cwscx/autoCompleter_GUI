@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(std::string path, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
 
@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
      *     Text box
      *     Clear button
      * */
+    dictionaryPath = (path.compare("") == 0) ? std::string("../freq_dict.txt") : path;
     ui->setupUi(this);
     dropDown = centralWidget()->findChild<WordList *>("listWidget");
     textField = centralWidget()->findChild<MyLineEdit *>("lineEdit");
@@ -96,6 +97,10 @@ void MainWindow::clearStatusBarText() {
  * */
 void MainWindow::setStatusBarText(const QString& str, int timeout) {
     statusBar()->showMessage(str, timeout);
+}
+
+std::string getDictionaryPath() {
+    return dictionaryPath;
 }
 
 MainWindow::~MainWindow() {
