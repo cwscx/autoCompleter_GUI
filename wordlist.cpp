@@ -22,9 +22,13 @@ WordList::WordList(QWidget *parent) : QListWidget(parent) {
     // Read the dictionary into DictTrie
     std::ifstream in;
     in.open(mainWindow->getDictionaryPath().c_str());
-    Utils U;
-    U.load_dict(*trie, in);
-    in.close();
+    if (!in.is_open()) {
+        mainWindow->dictNotLoaded();
+    } else {
+        Utils U;
+        U.load_dict(*trie, in);
+        in.close();
+    }
 }
 
 WordList::~WordList() {

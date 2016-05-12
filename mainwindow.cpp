@@ -19,10 +19,17 @@ MainWindow::MainWindow(std::string path, QWidget *parent) :
     statusBar()->clearMessage();
 
     // connection of events /w ui components
-    connect(pushButton, SIGNAL(clicked(bool)),
-            textField, SLOT(clearTextBox()));
-    connect(textField, SIGNAL(textEdited(const QString &)),
-            dropDown, SLOT(setItems(const QString &)));
+    if (textFieldEnabled) {
+        connect(pushButton, SIGNAL(clicked(bool)),
+                textField, SLOT(clearTextBox()));
+        connect(textField, SIGNAL(textEdited(const QString &)),
+                dropDown, SLOT(setItems(const QString &)));
+    } else {
+        textField->setDisabled(true);
+        textField->setStyleSheet(tr("background-color: rgb(211, 211, 211);"));
+        setStatusBarText(tr(
+          "Failed to open dictionary. Is the dictionary file in the parent directory?"));
+    }
     dropDown->setVisible(false);
 }
 
@@ -101,6 +108,10 @@ void MainWindow::setStatusBarText(const QString& str, int timeout) {
 
 std::string MainWindow::getDictionaryPath() {
     return dictionaryPath;
+}
+
+void MainWindow::dictNotLoaded() {
+    textFieldEnabled = false;
 }
 
 MainWindow::~MainWindow() {

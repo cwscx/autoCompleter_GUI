@@ -35,11 +35,15 @@ public:
 
     QString getTextFieldOriginalString();
     std::string getDictionaryPath();
+
+    void dictNotLoaded();
 private:
     Ui::MainWindow *ui;
     MyLineEdit * textField;
     WordList * dropDown;
     std::string dictionaryPath;
+
+    bool textFieldEnabled = true;
 };
 
 #endif // MAINWINDOW_H
