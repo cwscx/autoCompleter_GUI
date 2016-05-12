@@ -21,10 +21,14 @@ WordList::WordList(QWidget *parent) : QListWidget(parent) {
     trie = new DictionaryTrie();
     // Read the dictionary into DictTrie
     std::ifstream in;
-    in.open("../freq_dict.txt");
-    Utils U;
-    U.load_dict(*trie, in);
-    in.close();
+    in.open(mainWindow->getDictionaryPath().c_str());
+    if (!in.is_open()) {
+        mainWindow->dictNotLoaded();
+    } else {
+        Utils U;
+        U.load_dict(*trie, in);
+        in.close();
+    }
 }
 
 WordList::~WordList() {
