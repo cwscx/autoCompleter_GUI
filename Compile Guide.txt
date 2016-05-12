@@ -13,7 +13,7 @@ What does this do?
 How to compile?
 	Linux: 
 		Once inside the GUI file's folder (where AutoCreator.pro resides)
-		> qmake AutoCreator.pro 
+		> qmake Autocomplete.pro 
 			# Note to class users: Version of Qt matters. 
 			# Use the one in /software/common64/qt-5.5.0/bin
     		> make
@@ -26,3 +26,7 @@ How to compile?
 		On my Windows system I had to move a couple .dll-s from Qt's bin
 		folder to where the binaries are. Not sure if we need 
 		this step for Mac. -- Huajie
+
+How to use?
+	./Autocomplete [dictionaryPath]
+	(The path is optional. By default it loads ../freq_dict.txt (which takes a LOOOOOOOOOOOOONG (~1 minute) to load))
